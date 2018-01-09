@@ -28,6 +28,8 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 /**
  * Created by jg on 06.01.18.
  */
@@ -107,7 +109,11 @@ public class WeatherWidget extends AppWidgetProvider implements LocationListener
 
         if (startLocation){
             GetData client = new GetData();
-            client.getWeather(String.valueOf( location.getLatitude()), String.valueOf(location.getLongitude()), null, handler);
+            try {
+                client.getWeather(client.getCityName(context,location.getLatitude(),location.getLongitude()), null, handler);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             startLocation = false;
         }
 

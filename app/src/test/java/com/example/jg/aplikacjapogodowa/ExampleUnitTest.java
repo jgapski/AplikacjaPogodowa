@@ -1,6 +1,7 @@
 package com.example.jg.aplikacjapogodowa;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
@@ -11,6 +12,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
@@ -18,8 +20,7 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void cityTest() throws IOException {
-        MainActivity mainActivity = new MainActivity();
-        mainActivity.getCityName();
+    public void dailyTest() throws IOException {
+
     }
 }
