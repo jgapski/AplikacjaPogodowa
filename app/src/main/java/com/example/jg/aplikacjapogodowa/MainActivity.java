@@ -1,5 +1,7 @@
 package com.example.jg.aplikacjapogodowa;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
@@ -26,8 +28,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lucasr.twowayview.TwoWayView;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
+
+
 
     private boolean network_enabled = false;
     Boolean CurrenLocation;
@@ -110,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
 
         CurrenLocation = true;
+
 
     }
 
@@ -226,8 +235,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     if (CurrenLocation ){
             GetData client = new GetData();
-            client.getWeather("50.08", "19.92", null, handler);
-            CurrenLocation = false;
+           // client.getWeather("50.08", "19.92", null, handler);
+        try {
+            client.getWeather(client.getCityName(getApplicationContext(),location.getLatitude(),location.getLongitude()), null, handler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CurrenLocation = false;
         }
     }
 

@@ -2,6 +2,8 @@ package com.example.jg.aplikacjapogodowa;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -13,5 +15,11 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void cityTest() throws IOException {
+        MainActivity mainActivity = new MainActivity();
+        mainActivity.getCityName();
     }
 }
