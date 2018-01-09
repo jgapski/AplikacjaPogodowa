@@ -139,7 +139,6 @@ public class WeatherWidget extends AppWidgetProvider implements LocationListener
 
                 JSONObject city = response.getJSONObject("city");
                 String name = city.getString("name");
-
                 JSONArray list = response.getJSONArray("list");
                 JSONModel model = new JSONModel();
                 model.arrayList(list);
