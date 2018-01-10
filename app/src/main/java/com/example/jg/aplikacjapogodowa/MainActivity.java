@@ -33,11 +33,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     Boolean CurrenLocation;
     TextView cityTxt, cloudsTxt, humidityTxt, pressureTxt, speedTxt, tempMaxTxt, tempMinTxt, mornTxt, dayTxt, nightTxt;
     TextView weatherTxt, dateText, tempText;
-    ImageView iconImage, lineImage1, lineImage2;
+    ImageView iconImage;
     TwoWayView twoWayView;
-    ImageButton showTemp;
-    LinearLayout mainContainer, loadingContainer, circleContainer, circleContainer_2, LineContainer_1;
-    RelativeLayout mainView;
+    LinearLayout mainContainer, circleContainer_2;
+    RelativeLayout mainView, circleContainer, loadingContainer;
     AdditionalBar adapter;
 
     Boolean containerFlag;
@@ -70,26 +69,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         twoWayView = findViewById(R.id.lvItems);
         dateText = findViewById(R.id.dateText);
         tempText = findViewById(R.id.temp_A);
-        showTemp = findViewById(R.id.expandView);
         mainContainer = findViewById(R.id.mainContainer);
         loadingContainer = findViewById(R.id.LoadingView);
         mainView = findViewById(R.id.mainView);
         circleContainer =  findViewById(R.id.circle);
         circleContainer_2 = findViewById(R.id.cicle_2);
-        LineContainer_1 = findViewById(R.id.line_1);
-        lineImage1 = findViewById(R.id.Line_IMG1);
-        lineImage2 = findViewById(R.id.Line_IMG2);
 
         containerFlag = true;
-
-        showTemp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
-
 
         try {
             network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);

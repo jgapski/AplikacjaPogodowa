@@ -10,14 +10,15 @@
 
 
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:text="444"
-        android:textSize="18sp"
         android:id="@+id/text_1"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:background="@color/loadinfGray"
+        android:gravity="center"
+        android:text="444"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:background="@color/harddOrange"
-        />
+        android:textSize="17sp" />
 
     <ImageView
         android:layout_width="100dp"
@@ -25,13 +26,15 @@
         android:layout_marginTop="10dp"
         android:id="@+id/iconWeather"/>
 
-    <TextView android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tempData"
+        android:layout_width="match_parent"
         android:layout_height="27dp"
         android:text=" 22.78 C"
-        android:textSize="24sp"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:id="@+id/tempData"
-        android:textStyle="bold"/>
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 
 
