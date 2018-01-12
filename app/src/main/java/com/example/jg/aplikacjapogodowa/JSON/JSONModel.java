@@ -28,6 +28,7 @@ public class JSONModel {
     public ArrayList <String> descripWeather = new ArrayList<>();
     public ArrayList <String> iconWeather = new ArrayList<>();
     public ArrayList <String> weekDay = new ArrayList<>();
+    public ArrayList<Integer> date = new ArrayList<>();
 
     public  void  arrayList (JSONArray array) throws JSONException {
 
@@ -43,6 +44,7 @@ public class JSONModel {
         descripWeather.clear();
         iconWeather.clear();
         weekDay.clear();
+        date.clear();
 
         for (int i = 0; i < array.length(); i++){
             JSONObject object = array.getJSONObject(i);
@@ -50,6 +52,7 @@ public class JSONModel {
             String humidityString = object.getString("humidity");
             String pressureString = object.getString("pressure");
             String speedString = object.getString("speed");
+            Integer dateInt = object.getInt("dt");
             JSONObject tempObject = object.getJSONObject("temp");
             String tempMaxString = tempObject.getString("max");
             String tempMinString = tempObject.getString("min");
@@ -61,6 +64,7 @@ public class JSONModel {
             String descriptionWeather = object1.getString("description");
             String iconString = object1.getString("icon");
 
+            date.add(dateInt);
             clouds.add(cloudsString );
             humidity.add(humidityString);
             pressure.add(pressureString);

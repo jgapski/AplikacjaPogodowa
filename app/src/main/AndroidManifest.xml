@@ -11,10 +11,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar" >
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,22 +22,24 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Listeners.MyBroadcastReceiver"
-            android:exported="false">
-
-        </receiver>
-        <receiver android:name=".Widget.WeatherWidget" >
+        <receiver
+            android:name=".Listeners.MyBroadcastReceiver"
+            android:exported="false"></receiver>
+        <receiver android:name=".Widget.WeatherWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
                 <action android:name="AUTO_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/weather_widget_info" />
         </receiver>
 
+        <activity android:name=".PlotActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

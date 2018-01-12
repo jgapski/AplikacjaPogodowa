@@ -21,6 +21,18 @@
 
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/but_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:text="Więcej..."
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
     <RelativeLayout
         android:id="@+id/circle"
         android:layout_width="match_parent"
@@ -73,6 +85,7 @@
             android:textColor="@android:color/white"
             android:textSize="50sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -298,16 +311,20 @@
         />
 
 
-    <RelativeLayout android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="@color/loadinfGray"
+    <RelativeLayout
         android:id="@+id/LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/loadinfGray"
         android:orientation="vertical">
 
-        <ProgressBar android:layout_width="150dp"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_centerInParent="true"
-            android:id="@+id/progressBar" />
+            android:layout_centerInParent="true" />
 
         <TextView
             android:layout_width="match_parent"

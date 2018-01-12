@@ -40,4 +40,10 @@ public class GetData {
         URL = "http://api.openweathermap.org/data/2.5/forecast/daily?"+"q="+city+"&units=metric&lang=pl&appid="+ID;
         newClient.get(URL, params, handler);
     }
+
+    public static void getWeather5Days (String city, RequestParams params, AsyncHttpResponseHandler handler){
+        AsyncHttpClient newClient = new AsyncHttpClient();
+        URL = "http://api.openweathermap.org/data/2.5/forecast?q="+city+"&units=metric&lang=pl&appid="+ID;
+        newClient.get(URL, params, handler);
+    }
 }

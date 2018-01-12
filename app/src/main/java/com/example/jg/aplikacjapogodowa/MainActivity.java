@@ -1,5 +1,6 @@
 package com.example.jg.aplikacjapogodowa;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
@@ -10,6 +11,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jg.aplikacjapogodowa.JSON.JSONModel;
+import com.example.jg.aplikacjapogodowa.JSON.JSONModel5Days;
 import com.example.jg.aplikacjapogodowa.Klient.GetData;
 import com.example.jg.aplikacjapogodowa.Layout.AdditionalBar;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -27,6 +30,7 @@ import org.json.JSONObject;
 import org.lucasr.twowayview.TwoWayView;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
@@ -40,11 +44,30 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     LinearLayout mainContainer, circleContainer_2;
     RelativeLayout mainView, circleContainer, loadingContainer;
     AdditionalBar adapter;
+    Button butMore;
 
     Boolean containerFlag;
 
     JSONModel Data = new JSONModel();
 
+    public static final String TEMPERATURE = "com.example.jg.aplikacjapogodowa.TEMPERATURE";
+    public static final String CITY = "com.example.jg.aplikacjapogodowa.CITY";
+    public static final String DATE = "com.example.jg.aplikacjapogodowa.DATE";
+    public static final String PRESSURE = "com.example.jg.aplikacjapogodowa.PRESSURE";
+    public static final String TEMP_MAX = "com.example.jg.aplikacjapogodowa.TEMP_MAX";
+    public static final String TEMP_MIN = "com.example.jg.aplikacjapogodowa.TEMP_MIN";
+    public static final String CLOUDS = "com.example.jg.aplikacjapogodowa.CLOUDS";
+    public static final String HUMIDITY = "com.example.jg.aplikacjapogodowa.HUMIDITY";
+    private int jsons_read = 0;
+    private long[] date5days;
+    private double[] temp5days;
+    private double[] tempMax5days;
+    private double[] tempMin5days;
+    private int[] clouds5days;
+    private double[] pressure5days;
+    private int[] humidity5days;
+    private CharSequence[] days5;
+    private String cityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +99,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         mainView = findViewById(R.id.mainView);
         circleContainer =  findViewById(R.id.circle);
         circleContainer_2 = findViewById(R.id.cicle_2);
+        butMore = findViewById(R.id.but_more);
 
         containerFlag = true;
+
+        butMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PlotActivity.class);
+                intent.putExtra(TEMPERATURE, temp5days);
+                intent.putExtra(CITY, cityName);
+                intent.putExtra(DATE, days5);
+                intent.putExtra(TEMP_MAX, tempMax5days);
+                intent.putExtra(TEMP_MIN, tempMin5days);
+                intent.putExtra(PRESSURE, pressure5days);
+                intent.putExtra(CLOUDS, clouds5days);
+                intent.putExtra(HUMIDITY, humidity5days);
+                startActivity(intent);
+            }
+        });
 
         try {
             network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -106,14 +146,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
 
+            ++jsons_read;
 
-            loadingContainer.setVisibility(View.GONE);
+            if (jsons_read == 2)
+                loadingContainer.setVisibility(View.GONE);
 
             try {
 
-                JSONObject city = response.getJSONObject("city");
-                String name = city.getString("name");
-                cityTxt.setText(name);
+//                JSONObject city = response.getJSONObject("city");
+//                String name = city.getString("name");
+//                cityTxt.setText(name);
+                cityTxt.setText(cityName);
 
                 JSONArray list = response.getJSONArray("list");
                 Data.arrayList(list);
@@ -144,6 +187,59 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
     };
 
+    private JsonHttpResponseHandler handler5days = new JsonHttpResponseHandler(){
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            super.onSuccess(statusCode, headers, response);
+
+            ++jsons_read;
+
+            if (jsons_read == 2)
+                loadingContainer.setVisibility(View.GONE);
+
+            try {
+                JSONArray list = response.getJSONArray("list");
+                JSONModel5Days model5days = new JSONModel5Days();
+                model5days.arrayList(list);
+
+                date5days = new long[model5days.date.size()];
+                for (int i = 0; i < model5days.date.size(); i++)
+                    date5days[i] = model5days.date.get(i);
+
+                days5 = new CharSequence[model5days.dateTxt.size()];
+                for (int i = 0; i < model5days.dateTxt.size(); i++)
+                    days5[i] = model5days.dateTxt.get(i);
+
+                temp5days = listToArray(model5days.temp);
+                clouds5days = listToArrayInt(model5days.clouds);
+                tempMax5days = listToArray(model5days.tempMax);
+                tempMin5days = listToArray(model5days.tempMin);
+                pressure5days = listToArray(model5days.pressure);
+                humidity5days = listToArrayInt(model5days.humidity);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+        }
+    };
+
+    private double[] listToArray(List<Double> list) {
+        double[] arr = new double[list.size()];
+        for (int i = 0; i < list.size(); i++)
+            arr[i] = list.get(i);
+        return arr;
+    }
+
+    private int[] listToArrayInt(List<Integer> list) {
+        int[] arr = new int[list.size()];
+        for (int i = 0; i < list.size(); i++)
+            arr[i] = list.get(i);
+        return arr;
+    }
 
     public void setModel(Integer position){
 
@@ -212,11 +308,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location location) {
 
-        if (CurrenLocation ){
+        if (CurrenLocation) {
             GetData client = new GetData();
             // client.getWeather("50.08", "19.92", null, handler);
             try {
-                client.getWeather(client.getCityName(getApplicationContext(),location.getLatitude(),location.getLongitude()), null, handler);
+                cityName = client.getCityName(getApplicationContext(),
+                        location.getLatitude(), location.getLongitude());
+                client.getWeather(cityName, null, handler);
+                client.getWeather5Days(cityName, null, handler5days);
             } catch (IOException e) {
                 e.printStackTrace();
             }
