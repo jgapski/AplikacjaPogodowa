@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="14dp"
     android:layout_marginBottom="10dp"
     android:id="@+id/linear_A">
 
@@ -12,17 +12,17 @@
     <TextView
         android:id="@+id/text_1"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:gravity="center"
         android:text="444"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="17sp" />
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/iconWeather"
         android:layout_width="100dp"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:layout_marginTop="10dp" />
 
     <TextView

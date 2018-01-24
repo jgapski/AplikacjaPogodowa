@@ -22,7 +22,13 @@ public class JSONModel5Days {
     public ArrayList <String> weekDay = new ArrayList<>();
     public ArrayList<Long> date = new ArrayList<>();
     public ArrayList<String> dateTxt = new ArrayList<>();
-
+    /**
+     * converts JSON data from API (OpenWeatherMap) for 5 days to arrayList containing:
+     * CLOUDS, HUMIDITY, PRESSURE, SPEED(wind), TEMPERATURE - maximum, minimum,
+     * NAME of a WEEK DAY
+     * @param array
+     * @throws JSONException
+     */
     public void arrayList(JSONArray array) throws JSONException {
         clouds.clear();
         humidity.clear();

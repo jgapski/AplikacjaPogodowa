@@ -22,6 +22,13 @@ public class GetData {
     static String URL;
         private static final String ID = "bd5e378503939ddaee76f12ad7a97608";
 
+    /**
+     * sends a request to specified web API, data received is in JSON
+     * @param Latitude
+     * @param Longitude
+     * @param params
+     * @param handler
+     */
     public static void getWeather (String Latitude, String Longitude, RequestParams params, AsyncHttpResponseHandler handler){
 
         AsyncHttpClient newClient = new AsyncHttpClient();
@@ -29,12 +36,27 @@ public class GetData {
         newClient.get(URL, params, handler);
 
     }
+
+    /**
+     * specifiest the city name based on coordinates
+     * @param context
+     * @param lat
+     * @param lon
+     * @return
+     * @throws IOException
+     */
     public String getCityName(Context context, double lat, double lon) throws IOException {
         Geocoder gcd = new Geocoder(context, Locale.getDefault());
         List<Address> addresses = gcd.getFromLocation(lat,lon, 1);
         return addresses.get(0).getLocality();
     }
 
+    /**
+     * sends a request to specified web API, data received is in JSON
+     * @param city
+     * @param params
+     * @param handler
+     */
     public static void getWeather(String city, RequestParams params, AsyncHttpResponseHandler handler){
         AsyncHttpClient newClient = new AsyncHttpClient();
         URL = "http://api.openweathermap.org/data/2.5/forecast/daily?"+"q="+city+"&units=metric&lang=pl&appid="+ID;

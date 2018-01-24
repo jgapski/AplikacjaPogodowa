@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by kirahvi on 24.01.18.
@@ -27,6 +28,6 @@ public class TimeTest {
         DateFormat df = new SimpleDateFormat("HH");
         int date = Integer.parseInt(df.format(Calendar.getInstance().getTime()));
         System.out.println(date);
-        assertEquals(4, 2 + 2);
+        assertNotNull(date);
     }
 }

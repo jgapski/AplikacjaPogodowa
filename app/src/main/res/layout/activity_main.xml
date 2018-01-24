@@ -147,7 +147,7 @@
                     android:text="Clouds"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -159,7 +159,7 @@
                     android:text="Speed"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -171,7 +171,7 @@
                     android:text="Pressure"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -183,7 +183,7 @@
                     android:text="Humidity"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
             </TableRow>
 

@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         cloudsTxt.setText(cloudsTxtString);
         String humidityTxtString = Data.humidity.get(position) + "%";
         humidityTxt.setText(humidityTxtString);
-        String pressureTxtString = Data.pressure.get(position) + "hpa";
+        String pressureTxtString = Data.pressure.get(position) + "hPa";
         pressureTxt.setText(pressureTxtString);
         String speedTxtString = Data.speed.get(position) + "m/s";
         speedTxt.setText(speedTxtString);

@@ -13,6 +13,8 @@ import java.util.Locale;
  * Created by jg on 06.01.18.
  */
 
+
+
 public class JSONModel {
 
     public ArrayList <JSONObject> temp = new ArrayList<>();
@@ -30,6 +32,13 @@ public class JSONModel {
     public ArrayList <String> weekDay = new ArrayList<>();
     public ArrayList<Integer> date = new ArrayList<>();
 
+    /**
+     * converts JSON data from API (OpenWeatherMap) to arrayList containing:
+     * CLOUDS, HUMIDITY, PRESSURE, SPEED, TEMPERATURE - maximum, minimum, day, night, average,
+     * DESCRIPTION, NAME of a WEEK DAY
+     * @param array
+     * @throws JSONException
+     */
     public  void  arrayList (JSONArray array) throws JSONException {
 
         clouds.clear();
