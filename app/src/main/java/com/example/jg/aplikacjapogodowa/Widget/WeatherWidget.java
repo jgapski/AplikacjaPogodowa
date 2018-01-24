@@ -130,7 +130,7 @@ public class WeatherWidget extends AppWidgetProvider implements LocationListener
     }
 
 
-    //Main Handler
+
     private JsonHttpResponseHandler handler = new JsonHttpResponseHandler(){
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

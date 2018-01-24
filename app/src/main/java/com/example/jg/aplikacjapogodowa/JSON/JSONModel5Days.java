@@ -12,16 +12,15 @@ import java.util.Locale;
 
 public class JSONModel5Days {
 
-    public ArrayList <Double> temp = new ArrayList<>();
-    public ArrayList<Integer> clouds = new ArrayList<>();
-    public ArrayList <Integer> humidity = new ArrayList<>();
-    public ArrayList <Double> pressure = new ArrayList<>();
-    public ArrayList <Double> speed = new ArrayList<>();
-    public ArrayList <Double> tempMax = new ArrayList<>();
-    public ArrayList <Double> tempMin = new ArrayList<>();
-    public ArrayList <String> weekDay = new ArrayList<>();
+    public ArrayList<Double> temp = new ArrayList<>();
+    public ArrayList<Double> clouds = new ArrayList<>();
+    public ArrayList<Double> humidity = new ArrayList<>();
+    public ArrayList<Double> pressure = new ArrayList<>();
+    public ArrayList<String> weekDay = new ArrayList<>();
     public ArrayList<Long> date = new ArrayList<>();
     public ArrayList<String> dateTxt = new ArrayList<>();
+    public ArrayList<Double> windSpeed = new ArrayList<>();
+    public ArrayList<Double> windDirection = new ArrayList<>();
     /**
      * converts JSON data from API (OpenWeatherMap) for 5 days to arrayList containing:
      * CLOUDS, HUMIDITY, PRESSURE, SPEED(wind), TEMPERATURE - maximum, minimum,
@@ -33,34 +32,32 @@ public class JSONModel5Days {
         clouds.clear();
         humidity.clear();
         pressure.clear();
-        speed.clear();
-        tempMax.clear();
-        tempMin.clear();
         weekDay.clear();
         date.clear();
         dateTxt.clear();
+        windSpeed.clear();
+        windDirection.clear();
 
         for (int i = 0; i < array.length(); i++){
             JSONObject object = array.getJSONObject(i);
-            Integer cloudsInt = object.getJSONObject("clouds").getInt("all");
+            Double cloudsDouble = (double)object.getJSONObject("clouds").getInt("all");
             JSONObject mainObj = object.getJSONObject("main");
-            Integer humidityInt = mainObj.getInt("humidity");
+            Double humidityDouble = mainObj.getDouble("humidity");
             Double pressureDouble = mainObj.getDouble("pressure");
             Double tempDouble = mainObj.getDouble("temp");
-            Double tempMaxDouble = mainObj.getDouble("temp_max");
-            Double tempMinDouble = mainObj.getDouble("temp_min");
-            Double speedDouble = object.getJSONObject("wind").getDouble("speed");
+            JSONObject wind = object.getJSONObject("wind");
+            Double windSpeedDouble = wind.getDouble("speed");
+            Double windDirectionDouble = wind.getDouble("deg");
             Long dateLong = object.getLong("dt");
             String dateString = object.getString("dt_txt");
 
             date.add(dateLong);
-            clouds.add(cloudsInt);
-            humidity.add(humidityInt);
+            clouds.add(cloudsDouble);
+            humidity.add(humidityDouble);
             pressure.add(pressureDouble);
-            speed.add(speedDouble);
+            windSpeed.add(windSpeedDouble);
+            windDirection.add(windDirectionDouble);
             temp.add(tempDouble);
-            tempMax.add(tempMaxDouble);
-            tempMin.add(tempMinDouble);
             dateTxt.add(dateString);
 
             SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());

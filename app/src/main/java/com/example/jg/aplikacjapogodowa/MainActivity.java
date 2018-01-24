@@ -58,18 +58,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static final String CITY = "com.example.jg.aplikacjapogodowa.CITY";
     public static final String DATE = "com.example.jg.aplikacjapogodowa.DATE";
     public static final String PRESSURE = "com.example.jg.aplikacjapogodowa.PRESSURE";
-    public static final String TEMP_MAX = "com.example.jg.aplikacjapogodowa.TEMP_MAX";
-    public static final String TEMP_MIN = "com.example.jg.aplikacjapogodowa.TEMP_MIN";
+    public static final String WIND_SPEED = "com.example.jg.aplikacjapogodowa.WIND_SPEED";
+    public static final String WIND_DIRECTION = "com.example.jg.aplikacjapogodowa.WIND_DIRECTION";
     public static final String CLOUDS = "com.example.jg.aplikacjapogodowa.CLOUDS";
     public static final String HUMIDITY = "com.example.jg.aplikacjapogodowa.HUMIDITY";
     private int jsons_read = 0;
     private long[] date5days;
     private double[] temp5days;
-    private double[] tempMax5days;
-    private double[] tempMin5days;
-    private int[] clouds5days;
+    private double[] clouds5days;
     private double[] pressure5days;
-    private int[] humidity5days;
+    private double[] humidity5days;
+    private double[] wind_speed;
+    private double[] wind_direction;
     private CharSequence[] days5;
     private String cityName;
 
@@ -114,11 +114,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 intent.putExtra(TEMPERATURE, temp5days);
                 intent.putExtra(CITY, cityName);
                 intent.putExtra(DATE, days5);
-                intent.putExtra(TEMP_MAX, tempMax5days);
-                intent.putExtra(TEMP_MIN, tempMin5days);
                 intent.putExtra(PRESSURE, pressure5days);
                 intent.putExtra(CLOUDS, clouds5days);
                 intent.putExtra(HUMIDITY, humidity5days);
+                intent.putExtra(WIND_SPEED, wind_speed);
+                intent.putExtra(WIND_DIRECTION, wind_direction);
                 startActivity(intent);
             }
         });
@@ -215,11 +215,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     days5[i] = model5days.dateTxt.get(i);
 
                 temp5days = listToArray(model5days.temp);
-                clouds5days = listToArrayInt(model5days.clouds);
-                tempMax5days = listToArray(model5days.tempMax);
-                tempMin5days = listToArray(model5days.tempMin);
+                clouds5days = listToArray(model5days.clouds);
                 pressure5days = listToArray(model5days.pressure);
-                humidity5days = listToArrayInt(model5days.humidity);
+                humidity5days = listToArray(model5days.humidity);
+                wind_speed = listToArray(model5days.windSpeed);
+                wind_direction = listToArray(model5days.windDirection);
             } catch (Exception e){
                 e.printStackTrace();
             }
