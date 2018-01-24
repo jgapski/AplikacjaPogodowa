@@ -54,18 +54,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static final String CITY = "com.example.jg.aplikacjapogodowa.CITY";
     public static final String DATE = "com.example.jg.aplikacjapogodowa.DATE";
     public static final String PRESSURE = "com.example.jg.aplikacjapogodowa.PRESSURE";
-    public static final String TEMP_MAX = "com.example.jg.aplikacjapogodowa.TEMP_MAX";
-    public static final String TEMP_MIN = "com.example.jg.aplikacjapogodowa.TEMP_MIN";
+    public static final String WIND_SPEED = "com.example.jg.aplikacjapogodowa.WIND_SPEED";
+    public static final String WIND_DIRECTION = "com.example.jg.aplikacjapogodowa.WIND_DIRECTION";
     public static final String CLOUDS = "com.example.jg.aplikacjapogodowa.CLOUDS";
     public static final String HUMIDITY = "com.example.jg.aplikacjapogodowa.HUMIDITY";
     private int jsons_read = 0;
     private long[] date5days;
     private double[] temp5days;
-    private double[] tempMax5days;
-    private double[] tempMin5days;
-    private int[] clouds5days;
+    private double[] clouds5days;
     private double[] pressure5days;
-    private int[] humidity5days;
+    private double[] humidity5days;
+    private double[] wind_speed;
+    private double[] wind_direction;
     private CharSequence[] days5;
     private String cityName;
 
@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_main);
 
         LocationManager locationManager = (LocationManager) getSystemService(getApplicationContext().LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
@@ -110,35 +111,32 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 intent.putExtra(TEMPERATURE, temp5days);
                 intent.putExtra(CITY, cityName);
                 intent.putExtra(DATE, days5);
-                intent.putExtra(TEMP_MAX, tempMax5days);
-                intent.putExtra(TEMP_MIN, tempMin5days);
                 intent.putExtra(PRESSURE, pressure5days);
                 intent.putExtra(CLOUDS, clouds5days);
                 intent.putExtra(HUMIDITY, humidity5days);
+                intent.putExtra(WIND_SPEED, wind_speed);
+                intent.putExtra(WIND_DIRECTION, wind_direction);
                 startActivity(intent);
             }
         });
 
         try {
             network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        try {
-            network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+//        try {
+//            network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
         if (network_enabled) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
 
         CurrenLocation = true;
-
     }
 
     private JsonHttpResponseHandler handler = new JsonHttpResponseHandler(){
@@ -150,9 +148,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             if (jsons_read == 2)
                 loadingContainer.setVisibility(View.GONE);
-
             try {
-
 //                JSONObject city = response.getJSONObject("city");
 //                String name = city.getString("name");
 //                cityTxt.setText(name);
@@ -168,17 +164,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 twoWayView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                         setModel(position);
                     }
                 });
-
-
-
-            }catch (Exception e){
+            } catch (Exception e){
                 e.printStackTrace();
             }
-
         }
 
         @Override
@@ -211,11 +202,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     days5[i] = model5days.dateTxt.get(i);
 
                 temp5days = listToArray(model5days.temp);
-                clouds5days = listToArrayInt(model5days.clouds);
-                tempMax5days = listToArray(model5days.tempMax);
-                tempMin5days = listToArray(model5days.tempMin);
+                clouds5days = listToArray(model5days.clouds);
                 pressure5days = listToArray(model5days.pressure);
-                humidity5days = listToArrayInt(model5days.humidity);
+                humidity5days = listToArray(model5days.humidity);
+                wind_speed = listToArray(model5days.windSpeed);
+                wind_direction = listToArray(model5days.windDirection);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -234,15 +225,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return arr;
     }
 
-    private int[] listToArrayInt(List<Integer> list) {
-        int[] arr = new int[list.size()];
-        for (int i = 0; i < list.size(); i++)
-            arr[i] = list.get(i);
-        return arr;
-    }
-
     public void setModel(Integer position){
-
         cloudsTxt.setText(Data.clouds.get(position));
         humidityTxt.setText(Data.humidity.get(position));
         pressureTxt.setText(Data.pressure.get(position));
@@ -302,20 +285,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 iconImage.setImageResource(R.drawable.d13);
                 break;
         }
-
     }
 
     @Override
     public void onLocationChanged(Location location) {
-
         if (CurrenLocation) {
             GetData client = new GetData();
             // client.getWeather("50.08", "19.92", null, handler);
             try {
                 cityName = client.getCityName(getApplicationContext(),
                         location.getLatitude(), location.getLongitude());
-                client.getWeather(cityName, null, handler);
-                client.getWeather5Days(cityName, null, handler5days);
+                GetData.getWeather(cityName, null, handler);
+                GetData.getWeather5Days(cityName, null, handler5days);
             } catch (IOException e) {
                 e.printStackTrace();
             }
